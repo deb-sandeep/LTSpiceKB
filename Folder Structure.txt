@@ -1,0 +1,15 @@
+\lib
+\cmp: Store data file
+	\standard.res: Resistor
+	\standard.cap: Capacitor
+	\standard.ind: Inductor
+	\standard.bead: Ferrite bead
+	\standard.dio: Diode
+	\standard.bjt: Bipolar transistor
+	\standard.jft: J-FET
+	\standard.mos: MOS-FET
+\sub: Store sub file and lib file
+	\*.sub: Sub file
+	\*.lib: Lib file
+\sym: Store schematic symbol file
+	*.asy: Schematic symbol file
