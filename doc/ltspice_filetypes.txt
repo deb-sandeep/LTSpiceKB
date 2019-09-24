@@ -1,0 +1,14 @@
+What are the different LTspice file types?
+
+Schematic:     name.asc   the drawing with your circuit (a text file)
+Symbol:        name.asy   symbols for the schematic (a text file)
+Netlist:       name.net   unprocessed netlist (text file viewable from within LTspice 
+                          & usable by other SPICE engines) 
+Logfile:       name.log   info and results from .four, .measure, .op (text file viewable 
+                          from within LTspice); may also contain the fully processed
+                          and expanded netlist (a Control Panel setting)
+Result:        name.raw   binary output data file (text format may be optionally specified)
+Result:        name.fft   binary result of an FFT
+Plot settings: name.plt   text file used to save and restore Waveform Viewer plot settings
+Model file:     abc.xyz   text file containing model(s) - may be any valid file name
+Circuit file:  name.cir   frequently used extension for an external netlist input file (text)
