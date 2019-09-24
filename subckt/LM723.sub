@@ -1,80 +1,51 @@
-* From National Linear.lib
-*---------------------------------------------------------------LM723
-* connections:
-*              NC
-*              | current limit
-*              | | current sense
-*              | | | inverting input
-*              | | | | non-inverting input
-*              | | | | | Vref
-*              | | | | | | Vcc-
-*              | | | | | | | NC 
-*              | | | | | | | | Vz 
-*              | | | | | | | | | Vout  
-*              | | | | | | | | | |  Vc    
-*              | | | | | | | | | |  |   Vcc+         
-*              | | | | | | | | | |  |  |  freq. compensation
-*              | | | | | | | | | |  |  |  |  NC
-.SUBCKT LM723    2 3 4 5 6 7   9 10 11 12 13 
+* From edaboard (http://www.edaboard.com/thread114138.html)
+.SUBCKT LM723 2 3 4 5 6 7 9 10 11 12 13
+* CL CS IN- IN+ VREF VCC- VZ OUT VC VCC+ FRCO
 *
-* Note: This model is based on the National LM723 voltage
-*       regulator.  All characterization is from data sheet
-*       information.  The pin configuration corresponds to
-*       the dual-in-line package.  Therefore, it includes
-*       an internal 6.2 volt zener diode between Vout and Vz
-*       In the model, GIee & GIcc adjust the short circuit
-*       current limit and the standby current.  Rsb and the
-*       temperature coefficient on RIee also affect the
-*       standby current.  Bf and the transresistance term
-*       on HVref adjust the low frequency output impedence
-*       and the load regulation.  Rlnreg controls the line
-*       regulation and ripple rejection.  Rref and its
-*       temperature coefficient determine the average
-*       temperature coefficient with respect to the output
-*       voltage.
-*
-* Standby Current Correction
-*
-Rsb 12 7 300k
-*
-* Error Amplifier
-*
-Rlnreg 12 13 4meg
-*Icc 12 13 DC 583ua
-*Iee 20  7 DC 1166ua
-Iee   0 24 1166ua
-RIee 24 0 1 TC=4E-3
-GIee (20,7) (24,0) 1.0
-GIcc (12,13) (24,0) 0.5
-Q5 12 5 20 Npn1
-Q4 13 4 20 Npn1
-*
-* Voltage Reference
-*
-HVref 22 7 POLY(1) Vmon 7.15 0.0
-Rref 22 6 15ohm TC=0.01
-*
-* Output Stage
-*
-Q1 12 13 21 Npn1
-Q2 11 21 23 Npn1
-Vmon 23 10 DC 0.0
-Re 21 10 15k
-.MODEL Npn1 NPN (Bf=55 Is=1E-14)
-*
-* Frequency Compensation, Current Limit, Current Sense
-*
-Q3 13 2 3 Npn1
-R2 2  7 1.0e12
-R3 3  7 1.0e12
-*
-* Zener Diode (6.2V) to pin 9
-*
-Dz 9 10 Dz
-Rz 9  7 1.0e12
-.MODEL Dz D (Is=0.05p Rs=4 Bv=5.79 Ibv=0.05u)
-*
+DZ1 15 12 ZENER1
+J1 15 7 7 JMOD
+R1 15 16 15K
+Q1 16 16 17 QP1
+Q2 20 16 19 QP1
+Q3 20 21 7 QN1
+C1 20 21 5PF
+Q4 12 20 22 QN1
+Q5 12 22 23 QN1
+R2 23 6 100
+DZ2 25 6 ZENER1
+R3 21 25 30K
+R4 25 7 5K
+R5 12 17 500
+R6 12 19 25K
+R7 12 26 1K
+Q6 27 16 26 QP1
+Q7 23 27 28 QN1
+Q8 27 28 29 QN1
+R8 29 7 300
+R9 28 7 20K
+R10 12 30 1K
+Q9 13 16 30 QP1
+Q10 22 5 33 QN1
+Q11 13 4 33 QN1
+Q12 33 28 34 QN1
+R11 34 7 150
+Q13 12 13 36 QN1
+Q14 11 36 10 QOUT
+DZ3 9 10 ZENER2
+Q15 13 2 3 QN1
+R12 36 37 15K
+I1 0 9 0
+I2 0 2 0
+I3 0 3 0
+.MODEL QN1 NPN (BF=200 BR=2 RB=200 RC=200 RE=2 TF=0.35N IS=1E-14 VAF=125
++ CJE=1.0P VJE=0.7 MJE=0.33 CJC=0.3P
++ VJC=0.55 MJC=0.5 CJS=3.0P VJS=0.52 MJS=0.5 )
+.MODEL QP1 PNP (BF=50 BR=4 RB=300 RC=100 RE=10 TF=30N IS=1E-14 VAF=50
++ CJE=0.3P VJE=0.55 MJE=0.5 CJC=1.0P
++ VJC=0.55 MJC=0.5 CJS=3.0P VJS=0.52 MJS=0.5 )
+.MODEL QOUT NPN BF=80 RB=10 RC=5 IS=1E-16 VAF=50 CJE=10P CJC=10P
++ TF=3N TR=20N
+.MODEL JMOD NJF VTO=-3 RS=1 RD=1 LAMBDA=.02 CGS=5P CGS=5P
+.MODEL ZENER1 D( BV=6.6 IBV=0.02 RS=1.5  IS=1e-12) ; Ireverse=1e-4
+.MODEL ZENER2 D( BV=6.2 IBV=0.02 RS=1.5 IS=1e-12)  ; Ireverse=1e-4
 .ENDS
-
-
-******************************************************************************************
