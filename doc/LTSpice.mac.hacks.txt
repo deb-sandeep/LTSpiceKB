@@ -1,0 +1,13 @@
+In Mac OS the LT Spice models are kept in
+
+/users/sandeep/Library/Application Support/LTspice/lib
+/Applications/LTspice.app/Contents/lib/sub
+
+
+If an external library has to be added then it has to 
+be placed or softlined into the 
+
+/users/sandeep/Library/Application Support/LTspice/lib/sym
+
+folder.
+
