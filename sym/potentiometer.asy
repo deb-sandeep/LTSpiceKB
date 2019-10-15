@@ -10,8 +10,8 @@ LINE Normal 16 24 32 32
 LINE Normal 40 64 64 64
 LINE Normal 40 64 48 56
 LINE Normal 40 64 48 72
-WINDOW 0 36 32 Left 0
-WINDOW 3 36 88 Left 0
+WINDOW 0 36 32 Left 2
+WINDOW 3 36 88 Left 1
 SYMATTR Value Rtot=10K wiper=.5
 SYMATTR Prefix X
 SYMATTR SpiceModel potentiometer
